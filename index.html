@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Routine Gamify</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- App Container -->
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header__content">
+                <div class="user-info">
+                    <div class="points-display">
+                        <div class="points-icon">⭐</div>
+                        <div class="points-text">
+                            <div class="points-value" id="totalPoints">127</div>
+                            <div class="points-label">Points</div>
+                        </div>
+                    </div>
+                    <div class="level-info">
+                        <div class="level-badge">Level <span id="userLevel">3</span></div>
+                        <div class="streak-info">🔥 <span id="currentStreak">5</span> day streak</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Quick Stats -->
+        <section class="quick-stats">
+            <div class="stat-item">
+                <div class="stat-value" id="todayCompleted">0</div>
+                <div class="stat-label">Today</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="todayPoints">0</div>
+                <div class="stat-label">Points</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="weekStreak">5</div>
+                <div class="stat-label">Streak</div>
+            </div>
+        </section>
+
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs">
+            <button class="nav-tab nav-tab--active" data-tab="routines">
+                <span class="nav-tab__icon">🏃</span>
+                <span class="nav-tab__text">Routines</span>
+            </button>
+            <button class="nav-tab" data-tab="todos">
+                <span class="nav-tab__icon">📝</span>
+                <span class="nav-tab__text">To-Do</span>
+            </button>
+            <button class="nav-tab" data-tab="rewards">
+                <span class="nav-tab__icon">🎁</span>
+                <span class="nav-tab__text">Rewards</span>
+            </button>
+            <button class="nav-tab" data-tab="stats">
+                <span class="nav-tab__icon">📊</span>
+                <span class="nav-tab__text">Stats</span>
+            </button>
+        </nav>
+
+        <!-- Tab Content -->
+        <main class="tab-content">
+            <!-- Daily Routines Tab -->
+            <section class="tab-pane tab-pane--active" id="routines-tab">
+                <div class="container">
+                    <h2 class="section-title">Daily Routines</h2>
+                    <div class="tasks-list" id="routinesList">
+                        <!-- Tasks will be populated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- To-Do List Tab -->
+            <section class="tab-pane" id="todos-tab">
+                <div class="container">
+                    <h2 class="section-title">Today's To-Do</h2>
+                    
+                    <!-- Add Task Form -->
+                    <form class="add-task-form card" id="addTaskForm">
+                        <div class="card__body">
+                            <div class="form-group">
+                                <label class="form-label" for="taskName">Task Name</label>
+                                <input type="text" id="taskName" class="form-control" placeholder="Enter task..." required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group form-group--half">
+                                    <label class="form-label" for="taskPoints">Points</label>
+                                    <input type="range" id="taskPoints" class="point-slider" min="1" max="50" value="10">
+                                    <div class="points-preview"><span id="pointsPreview">10</span> pts</div>
+                                </div>
+                                <div class="form-group form-group--half">
+                                    <label class="form-label" for="taskPriority">Priority</label>
+                                    <select id="taskPriority" class="form-control">
+                                        <option value="low">Low</option>
+                                        <option value="medium" selected>Medium</option>
+                                        <option value="high">High</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn--primary btn--full-width">Add Task</button>
+                        </div>
+                    </form>
+
+                    <div class="tasks-list" id="todosList">
+                        <!-- Tasks will be populated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Rewards Shop Tab -->
+            <section class="tab-pane" id="rewards-tab">
+                <div class="container">
+                    <h2 class="section-title">Rewards Shop</h2>
+                    
+                    <!-- Add Custom Reward -->
+                    <form class="add-reward-form card" id="addRewardForm">
+                        <div class="card__body">
+                            <h3>Create Custom Reward</h3>
+                            <div class="form-group">
+                                <label class="form-label" for="rewardName">Reward Name</label>
+                                <input type="text" id="rewardName" class="form-control" placeholder="Enter reward..." required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group form-group--half">
+                                    <label class="form-label" for="rewardCost">Cost (Points)</label>
+                                    <input type="number" id="rewardCost" class="form-control" min="1" max="500" value="50" required>
+                                </div>
+                                <div class="form-group form-group--half">
+                                    <label class="form-label" for="rewardDescription">Description</label>
+                                    <input type="text" id="rewardDescription" class="form-control" placeholder="Optional description">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn--outline btn--full-width">Add Reward</button>
+                        </div>
+                    </form>
+
+                    <div class="rewards-grid" id="rewardsList">
+                        <!-- Rewards will be populated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats Tab -->
+            <section class="tab-pane" id="stats-tab">
+                <div class="container">
+                    <h2 class="section-title">Progress & Stats</h2>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card card">
+                            <div class="card__body">
+                                <h3>Overall Progress</h3>
+                                <div class="progress-circle" id="overallProgress">
+                                    <div class="progress-value">67%</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card card">
+                            <div class="card__body">
+                                <h3>This Week</h3>
+                                <div class="week-progress">
+                                    <div class="day-progress" data-day="M">✓</div>
+                                    <div class="day-progress" data-day="T">✓</div>
+                                    <div class="day-progress active" data-day="W">5</div>
+                                    <div class="day-progress" data-day="T">-</div>
+                                    <div class="day-progress" data-day="F">-</div>
+                                    <div class="day-progress" data-day="S">-</div>
+                                    <div class="day-progress" data-day="S">-</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="achievements-card card">
+                            <div class="card__body">
+                                <h3>Achievements</h3>
+                                <div class="achievements-grid" id="achievementsList">
+                                    <div class="achievement achievement--earned">
+                                        <div class="achievement-icon">🏆</div>
+                                        <div class="achievement-name">First Week</div>
+                                    </div>
+                                    <div class="achievement achievement--earned">
+                                        <div class="achievement-icon">🔥</div>
+                                        <div class="achievement-name">5 Day Streak</div>
+                                    </div>
+                                    <div class="achievement">
+                                        <div class="achievement-icon">⭐</div>
+                                        <div class="achievement-name">100 Points</div>
+                                    </div>
+                                    <div class="achievement">
+                                        <div class="achievement-icon">💪</div>
+                                        <div class="achievement-name">Fitness Master</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Point Earned Animation -->
+    <div class="point-animation" id="pointAnimation">
+        <div class="point-animation__text">+<span id="animationPoints">10</span></div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modalTitle">Confirm Purchase</h3>
+            </div>
+            <div class="modal-body">
+                <p id="modalMessage">Are you sure you want to purchase this reward?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn--secondary" id="modalCancel">Cancel</button>
+                <button class="btn btn--primary" id="modalConfirm">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
